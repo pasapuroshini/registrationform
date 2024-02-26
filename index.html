@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INFINITUS</title>
+<style>
+ 
+body {
+    font-family: Arial, sans-serif;
+    background-image:url('abc.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    backdrop-filter: blur(11px);
+    border: 2px solid rgb(91,135,168);
+    border-radius: 12px;
+    padding: 40px;
+    width: 400px;
+}
+
+h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+form {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input::placeholder {
+    color: #999999;
+}
+
+.error {
+    color: #ff0000;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    background-color: #4a90e2;
+    color: #ffffff;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357ae8;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Registration Form</h1>
+
+  <form id="registrationForm">
+    <input type="text" id="name" placeholder="Name">
+    <div id="nameError" class="error"></div>
+    
+    <input type="number" id="age" placeholder="Age">
+    <div id="ageError" class="error"></div>
+    
+    <input type="email" id="email" placeholder="Email">
+    <div id="emailError" class="error"></div>
+    
+    <input type="text" id="pincode" placeholder="PIN Code">
+    <div id="pincodeError" class="error"></div>
+    
+    <input type="password" id="password" placeholder="Password">
+    <div id="passwordError" class="error"></div>
+    
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('registrationForm');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const age = parseInt(document.getElementById('age').value);
+    const email = document.getElementById('email').value.trim();
+    const pincode = document.getElementById('pincode').value.trim();
+    const password = document.getElementById('password').value.trim();
+    
+    let isValid = true;
+
+    // Name validation
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(name)) {
+      document.getElementById('nameError').innerText = 'Name should contain alphabets or spaces only.';
+      isValid = false;
+    } else {
+      document.getElementById('nameError').innerText = '';
+    }
+
+    // Age validation
+    if (isNaN(age) || age < 18 || age > 60) {
+      document.getElementById('ageError').innerText = 'Age should be between 18 and 60.';
+      isValid = false;
+    } else {
+      document.getElementById('ageError').innerText = '';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+      isValid = false;
+    } else {
+      document.getElementById('emailError').innerText = '';
+    }
+
+    // PIN code validation
+    const pincodeRegex = /^\d{6}$/;
+    if (!pincodeRegex.test(pincode)) {
+      document.getElementById('pincodeError').innerText = 'PIN code should contain 6 digits only.';
+      isValid = false;
+    } else {
+      document.getElementById('pincodeError').innerText = '';
+    }
+
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      document.getElementById('passwordError').innerText = 'Password should have minimum 8 characters with at least one lowercase letter, one uppercase letter, one digit, and one special character.';
+      isValid = false;
+    } else {
+      document.getElementById('passwordError').innerText = '';
+    }
+
+    // If all inputs are valid, submit the form
+    if (isValid) {
+      form.submit();
+    }
+  });
+</script>
+
+</body>
+</html>
